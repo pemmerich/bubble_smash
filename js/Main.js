@@ -18,8 +18,11 @@ function init()
 	stage = new createjs.Stage("bubbleCanvas");
 	createjs.Touch.enable(stage);
 
-	
-	
+	/*
+	var ctx = document.getElementById("bubbleCanvas");
+	ctx.width  = window.innerWidth;
+	ctx.height = window.innerHeight;
+	*/
 	
 	var resetBtn = stage.addChild(new Button("Reset Board", "#0099cc"));
 	resetBtn.x = 5;
