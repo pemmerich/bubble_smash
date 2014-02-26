@@ -11,6 +11,8 @@ var levels = [
               ];
 var modeBtn;
 var gameOverLabel;
+var canvas;
+var canvasMeasure;
 
 function init() 
 {
@@ -18,32 +20,39 @@ function init()
 	stage = new createjs.Stage("bubbleCanvas");
 	createjs.Touch.enable(stage);
 
-	/*
-	var ctx = document.getElementById("bubbleCanvas");
-	ctx.width  = window.innerWidth;
-	ctx.height = window.innerHeight;
-	*/
 	
-	var resetBtn = stage.addChild(new Button("Reset Board", "#0099cc"));
+	canvas = document.getElementById("bubbleCanvas");
+	canvas.width  = window.innerWidth;
+	canvas.height = window.innerHeight;
+	
+	if(canvas.width>canvas.height){
+		canvasMeasure = canvas.height-(canvas.height/20)*4;
+	}else{
+		canvasMeasure = canvas.width;
+	}
+	
+	
+	
+	var resetBtn = stage.addChild(new Button("Reset Board", "#0099cc",canvasMeasure/20+"px Arial"));
 	resetBtn.x = 5;
-	resetBtn.y = 475;
+	resetBtn.y = (canvasMeasure/10)*(11);
 	resetBtn.on("click", reset);
 	
-	var quitBtn = stage.addChild(new Button("New Game", "#0099cc"));
-	quitBtn.x = 150;
-	quitBtn.y = 475;
+	var quitBtn = stage.addChild(new Button("New Game", "#0099cc",canvasMeasure/20+"px Arial"));
+	quitBtn.x = resetBtn.x + resetBtn.width+10;
+	quitBtn.y = (canvasMeasure/10)*(11);
 	quitBtn.on("click", quit);
 	
-	modeBtn = stage.addChild(new Button("Standard", "#0099cc"));
-	modeBtn.x = 285;
-	modeBtn.y = 475;
+	modeBtn = stage.addChild(new Button("Standard", "#0099cc",canvasMeasure/20+"px Arial"));
+	modeBtn.x = quitBtn.x+quitBtn.width+10;
+	modeBtn.y = (canvasMeasure/10)*(11);
 	modeBtn.on("click", changeMode);
 	
-	gameOverLabel = new createjs.Text("", "18px Arial", "#000");
+	gameOverLabel = new createjs.Text("", canvasMeasure/10+"px Arial", "#000");
 	gameOverLabel.textBaseline = "top";
 	gameOverLabel.textAlign = "center";
 	
-	var width = stage.canvas.width;
+	var width = canvas.width;
 	var height = gameOverLabel.getMeasuredHeight()+20;
 	
 	gameOverLabel.x = width/2;
@@ -111,7 +120,7 @@ function checkSmashable(bubble)
 
 function smashBubble(bubble)
 {
-	//console.log("smash bubble");
+	console.log("smash bubble bubble_"+bubble.column+"_"+bubble.row);
 	window.clearTimeout(smashTimer);
 	smashTimer = setTimeout(cleanUpBubbles, 100);
 	
@@ -159,7 +168,7 @@ function smashBubble(bubble)
 
 function cleanUpBubbles()
 {
-	//console.log("clean up bubbles");
+	console.log("clean up bubbles");
 	for(var q=0; q<11; q++){
 		for (var i=0; i<11; i++){
 			for (var n=0; n<10; n++){
@@ -184,7 +193,7 @@ function cleanUpBubbles()
 
 function cleanUpBubblesHorizontal()
 {
-	//console.log("clean up bubbles horizontal");
+	console.log("clean up bubbles horizontal");
 	if(mode=="shifter"){
 		for(var q=0; q<11; q++){
 			for (var i=0; i<11; i++){
@@ -339,7 +348,7 @@ function loadLevel(level)
 	}
 	for (var i=0; i<11; i++){
 		for (var n=0; n<10; n++){
-			var bubble = new Bubble(20, levels[level]);
+			var bubble = new Bubble(canvasMeasure/20-1, levels[level]);
 			bubble.row=i;
 			bubble.column=n;
 			bubble.name = "bubble_"+n+"_"+i;

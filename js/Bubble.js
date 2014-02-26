@@ -45,7 +45,8 @@ p.initialize = function(radius,types)
 p.handleClick = function (event) 
 {    
 	var target = event.target;
-	checkSmashable(this);
+	if(this.type != "blank")
+		checkSmashable(this);
 } 
 
 
