@@ -13,6 +13,8 @@ p.row;
 p.column;
 p.startX;
 p.endX;
+p.offset;
+p.originalX;
 
 p.Container_initialize = p.initialize;
 p.initialize = function(radius,types) 
@@ -42,6 +44,7 @@ p.initialize = function(radius,types)
 	
 	this.on("mousedown", this.handleMouseDown);
 	this.on("pressup", this.handlePressUp);
+	this.on("pressmove", this.handlePressMove);
 
 	this.addChild(this.background); 
 	this.mouseChildren = false;
@@ -58,6 +61,24 @@ p.handleMouseDown = function (event)
 {
 	console.log("press down "+event.stageX);
 	this.startX = event.stageX;
+	this.offset = {x:this.background.x-event.stageX, y:this.background.y-event.stageY};
+	this.originalX = this.background.x;
+	stage.setChildIndex(this,stage.getNumChildren()-1);
+}
+
+p.handlePressMove = function (event) 
+{    
+	console.log("press move "+event.stageX);
+	this.endX = event.stageX;
+	var diff = this.startX-this.endX;
+	if(Math.abs(diff)<this.radius*2){
+		this.background.x = event.stageX + this.offset.x;
+	}else{
+		try{
+			this.background.x = (this.original.x + this.radius*2)*(diff/diff);
+		}catch(e){}
+	}
+	
 }
 
 p.handlePressUp = function (event) 
@@ -72,7 +93,8 @@ p.handlePressUp = function (event)
 	}else{
 		swapBubble(this,diff);
 	}
-} 
+}
+
 
 
 p.updateBubble = function(type)
