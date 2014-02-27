@@ -19,11 +19,12 @@ function init()
 	//console.log("init");
 	stage = new createjs.Stage("bubbleCanvas");
 	createjs.Touch.enable(stage);
-
+	
 	
 	canvas = document.getElementById("bubbleCanvas");
 	canvas.width  = window.innerWidth;
 	canvas.height = window.innerHeight;
+	
 	
 	if(canvas.width>canvas.height){
 		canvasMeasure = canvas.height-(canvas.height/20)*4;
@@ -65,6 +66,28 @@ function init()
 	
 	
 	createjs.Ticker.on("tick", stage);
+}
+
+function swapBubble(bubble, diff)
+{
+	
+	
+	
+	var row = bubble.row;
+	var column = bubble.column;
+	var type = bubble.type;
+	var swap;
+	var swapType;
+	
+	if(diff>0){
+		swap = stage.getChildByName("bubble_"+(column-1)+"_"+row);
+	}else{
+		swap = stage.getChildByName("bubble_"+(column+1)+"_"+row);
+	}
+	swapType = swap.type;
+	bubble.updateBubble(swapType);
+	swap.updateBubble(type);
+	cleanUpBubbles();
 }
 
 function checkSmashable(bubble)

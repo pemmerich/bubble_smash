@@ -11,6 +11,8 @@ p.type;
 p.radius = 15;
 p.row;
 p.column;
+p.startX;
+p.endX;
 
 p.Container_initialize = p.initialize;
 p.initialize = function(radius,types) 
@@ -36,7 +38,10 @@ p.initialize = function(radius,types)
 	//must explicitly set bounds
 	this.setBounds(0,0,this.radius*2,this.radius*2);
 	
-	this.on("click", this.handleClick);
+	//this.on("click", this.handleClick);
+	
+	this.on("mousedown", this.handleMouseDown);
+	this.on("pressup", this.handlePressUp);
 
 	this.addChild(this.background); 
 	this.mouseChildren = false;
@@ -49,18 +54,39 @@ p.handleClick = function (event)
 		checkSmashable(this);
 } 
 
+p.handleMouseDown = function (event)
+{
+	console.log("press down "+event.stageX);
+	this.startX = event.stageX;
+}
+
+p.handlePressUp = function (event) 
+{    
+	console.log("press up "+event.stageX);
+	this.endX = event.stageX;
+	var diff = this.startX-this.endX;
+	console.log("diff = "+diff);
+	if(Math.abs(diff)<this.radius){
+		if(this.type != "blank")
+			checkSmashable(this);
+	}else{
+		swapBubble(this,diff);
+	}
+} 
+
 
 p.updateBubble = function(type)
 {
 	this.type = type;
 	color = this.type;
-	
-	
-	this.background = new createjs.Shape();
-	this.background.graphics.beginFill(color).drawCircle(0, 0, this.radius);
-	//must explicitly set bounds
-	this.setBounds(0,0,this.radius*2,this.radius*2);
-	this.addChild(this.background); 
+	this.removeChild(this.background);
+	if(type!="blank"){
+		this.background = new createjs.Shape();
+		this.background.graphics.beginFill(color).drawCircle(0, 0, this.radius);
+		//must explicitly set bounds
+		this.setBounds(0,0,this.radius*2,this.radius*2);
+		this.addChild(this.background); 
+	}
 
 }
 
