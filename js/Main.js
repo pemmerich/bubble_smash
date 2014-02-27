@@ -143,7 +143,7 @@ function checkSmashable(bubble)
 
 function smashBubble(bubble)
 {
-	console.log("smash bubble bubble_"+bubble.column+"_"+bubble.row);
+	//console.log("smash bubble bubble_"+bubble.column+"_"+bubble.row);
 	window.clearTimeout(smashTimer);
 	smashTimer = setTimeout(cleanUpBubbles, 100);
 	
@@ -191,7 +191,7 @@ function smashBubble(bubble)
 
 function cleanUpBubbles()
 {
-	console.log("clean up bubbles");
+	//console.log("clean up bubbles");
 	for(var q=0; q<11; q++){
 		for (var i=0; i<11; i++){
 			for (var n=0; n<10; n++){
@@ -216,7 +216,7 @@ function cleanUpBubbles()
 
 function cleanUpBubblesHorizontal()
 {
-	console.log("clean up bubbles horizontal");
+	//console.log("clean up bubbles horizontal");
 	if(mode=="shifter"){
 		for(var q=0; q<11; q++){
 			for (var i=0; i<11; i++){

@@ -59,7 +59,7 @@ p.handleClick = function (event)
 
 p.handleMouseDown = function (event)
 {
-	console.log("press down "+event.stageX);
+	//console.log("press down "+event.stageX);
 	this.startX = event.stageX;
 	this.offset = {x:this.background.x-event.stageX, y:this.background.y-event.stageY};
 	this.originalX = this.background.x;
@@ -68,7 +68,7 @@ p.handleMouseDown = function (event)
 
 p.handlePressMove = function (event) 
 {    
-	console.log("press move "+event.stageX);
+	//console.log("press move "+event.stageX);
 	this.endX = event.stageX;
 	var diff = this.startX-this.endX;
 	if(Math.abs(diff)<this.radius*2){
@@ -83,10 +83,10 @@ p.handlePressMove = function (event)
 
 p.handlePressUp = function (event) 
 {    
-	console.log("press up "+event.stageX);
+	//console.log("press up "+event.stageX);
 	this.endX = event.stageX;
 	var diff = this.startX-this.endX;
-	console.log("diff = "+diff);
+	//console.log("diff = "+diff);
 	if(Math.abs(diff)<this.radius){
 		if(this.type != "blank")
 			checkSmashable(this);
