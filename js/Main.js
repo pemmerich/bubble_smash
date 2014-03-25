@@ -3,11 +3,11 @@ var smashTimer;
 var mode = "standard";
 var level = 0;
 var levels = [
-              ["#0099cc","#ff6600"],
-              ["#0099cc","#ff6600","#0fad00"],
-              ["#0099cc","#ff6600","#0fad00","#6300a5"],
-              ["#0099cc","#ff6600","#0fad00","#6300a5","#ffff00"],
-              ["#0099cc","#ff6600","#0fad00","#6300a5","#ffff00","#0010a5"]
+              ["images/blue.png","images/orange.png"],
+              ["images/blue.png","images/orange.png","images/green.png"],
+              ["images/blue.png","images/orange.png","images/green.png","images/purple.png"],
+              ["images/blue.png","images/orange.png","images/green.png","images/purple.png","images/pink.png"],
+              ["images/blue.png","images/orange.png","images/green.png","images/purple.png","images/pink.png","images/dark_blue.png"]
               ];
 var modeBtn;
 var gameOverLabel;

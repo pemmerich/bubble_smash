@@ -6,9 +6,11 @@ var Bubble = function(radius,types) {
 var p = Bubble.prototype = new createjs.Container(); // inherit from Container
 p.background;
 p.count = 0;
-p.bubbleTypes = ["#ff0000","#3366ff"];
+//p.bubbleTypes = ["#ff0000","#3366ff"];
+p.bubbleTypes = ["images/blue.png","images/orange.png"];
 p.type;
 p.radius = 15;
+p.imgWidth = 75;
 p.row;
 p.column;
 p.startX;
@@ -32,11 +34,23 @@ p.initialize = function(radius,types)
 	color = this.type;
 	
 	var bg = new createjs.Shape();
-	bg.graphics.beginFill("white").drawRect(-this.radius, -this.radius, this.radius*2, this.radius*2);
-	this.addChild(bg); 
+	//bg.graphics.beginFill("red").drawRect(-this.radius, -this.radius, this.radius*2, this.radius*2);
+	//this.addChild(bg); 
 	
+	/*
 	this.background = new createjs.Shape();
 	this.background.graphics.beginFill(color).drawCircle(0, 0, this.radius);
+	*/
+	this.background = new createjs.Bitmap(color);
+	this.addChild(this.background); 
+	//set size of image
+	
+
+	var scale = (this.radius*2)/this.imgWidth;
+
+	this.background.scaleX = this.background.scaleY = scale;
+	this.background.regX = this.background.regY = this.radius;
+	
 	//must explicitly set bounds
 	this.setBounds(0,0,this.radius*2,this.radius*2);
 	
@@ -46,8 +60,9 @@ p.initialize = function(radius,types)
 	this.on("pressup", this.handlePressUp);
 	this.on("pressmove", this.handlePressMove);
 
-	this.addChild(this.background); 
+	
 	this.mouseChildren = false;
+	
 } 
 
 p.handleClick = function (event) 
@@ -83,7 +98,7 @@ p.handlePressMove = function (event)
 
 p.handlePressUp = function (event) 
 {    
-	//console.log("press up "+event.stageX);
+	console.log("press up "+event.stageX+" type = "+this.type);
 	this.endX = event.stageX;
 	var diff = this.startX-this.endX;
 	//console.log("diff = "+diff);
@@ -103,8 +118,15 @@ p.updateBubble = function(type)
 	color = this.type;
 	this.removeChild(this.background);
 	if(type!="blank"){
+		/*
 		this.background = new createjs.Shape();
 		this.background.graphics.beginFill(color).drawCircle(0, 0, this.radius);
+		*/
+		this.background = new createjs.Bitmap(color);
+
+		var scale = (this.radius*2)/this.imgWidth;
+		this.background.scaleX = this.background.scaleY = scale;
+		this.background.regX = this.background.regY = this.radius;
 		//must explicitly set bounds
 		this.setBounds(0,0,this.radius*2,this.radius*2);
 		this.addChild(this.background); 
